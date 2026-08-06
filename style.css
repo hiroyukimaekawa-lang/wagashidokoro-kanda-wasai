@@ -72,6 +72,23 @@ ul { list-style: none; }
     z-index: 1000;
     box-shadow: var(--shadow-sm);
     border-bottom: 1px solid rgba(122, 68, 82, 0.15);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+/* TOPページ限定：初期状態（スクロール前）は透明ヘッダー */
+.home-page .site-header {
+    position: fixed;
+    width: 100%;
+    background-color: transparent;
+    box-shadow: none;
+    border-bottom-color: transparent;
+}
+
+/* TOPページ限定：スクロール後は背景色を表示 */
+.home-page.is-scrolled .site-header {
+    background-color: #F6C8BD;
+    box-shadow: var(--shadow-sm);
+    border-bottom-color: rgba(122, 68, 82, 0.15);
 }
 
 .header-inner {
