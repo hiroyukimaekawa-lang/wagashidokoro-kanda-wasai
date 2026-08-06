@@ -171,15 +171,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         // ② console.log(sortedContents)
         console.log("② sortedContents:", sortedContents);
 
-        // 2. セクションごとに商品を振り分ける（既存バグのままの厳密比較）
+        // 判定用ヘルパー：sectionが配列の場合と文字列の場合の双方に対応する
+        const matchSection = (item, sectionName) => {
+            if (!item.section) return false;
+            if (Array.isArray(item.section)) {
+                return item.section.includes(sectionName);
+            }
+            return item.section === sectionName;
+        };
+
+        // 2. セクションごとに商品を振り分ける（配列判定に対応した修正版）
         const seasonalJyounamagashiList = sortedContents.filter(
-            item => item.section === "季節の上生菓子" && item.image && item.image.url
+            item => matchSection(item, "季節の上生菓子") && item.image && item.image.url
         );
         const standardWagashiList = sortedContents.filter(
-            item => item.section === "定番和菓子" && item.image && item.image.url
+            item => matchSection(item, "定番和菓子") && item.image && item.image.url
         );
         const seasonalWagashiList = sortedContents.filter(
-            item => item.section === "季節の和菓子" && item.image && item.image.url
+            item => matchSection(item, "季節の和菓子") && item.image && item.image.url
         );
 
         // ③④⑤ 各リストのログ
@@ -187,7 +196,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log("④ standardWagashiList:", standardWagashiList);
         console.log("⑤ seasonalWagashiList:", seasonalWagashiList);
 
-        // 3. レンダリング関uhnya呼び出し
+        // 3. レンダリング関数の呼び出し
         renderSeasonalJyounamagashi(seasonalJyounamagashiList);
         renderClassicWagashi("standard-wagashi", standardWagashiList);
         renderClassicWagashi("seasonal-wagashi", seasonalWagashiList);
