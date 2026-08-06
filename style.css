@@ -2630,3 +2630,24 @@ textarea.contact-form-control {
         padding: 20px;
     }
 }
+
+/* ==========================================================================
+   microCMS Integration Styles
+   ========================================================================== */
+.microcms-desc {
+    white-space: pre-wrap; /* テキストとして挿入された商品説明の改行を有効化 */
+}
+
+.microcms-loading-message,
+.microcms-empty-message,
+.microcms-error-message {
+    text-align: center;
+    padding: 40px 10px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1rem;
+    color: var(--color-primary, #7A4452);
+}
+
+.microcms-error-message {
+    color: #c0392b;
+}
