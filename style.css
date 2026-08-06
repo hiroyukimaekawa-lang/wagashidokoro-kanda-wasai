@@ -290,7 +290,7 @@ ul { list-style: none; }
 }
 
 .slide-logo-wrap {
-    margin-bottom: 30px;
+    margin-bottom: 12px;
     display: flex;
     justify-content: center;
 }
@@ -1283,7 +1283,7 @@ ul { list-style: none; }
     }
 
     .slide-logo-wrap {
-        margin-bottom: 24px;
+        margin-bottom: 10px;
     }
 
     .slide-logo {
@@ -1470,7 +1470,7 @@ ul { list-style: none; }
     }
 
     .slide-logo-wrap {
-        margin-bottom: 18px;
+        margin-bottom: 8px;
     }
 
     .slide-logo {
@@ -1640,7 +1640,7 @@ ul { list-style: none; }
     }
 
     .slide-logo-wrap {
-        margin-bottom: 16px;
+        margin-bottom: 6px;
     }
 
     .slide-logo {
