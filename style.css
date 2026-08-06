@@ -290,13 +290,13 @@ ul { list-style: none; }
 }
 
 .slide-logo-wrap {
-    margin-bottom: 24px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: center;
 }
 
 .slide-logo {
-    width: 200px;
+    width: 260px;
     height: auto;
     filter: brightness(0) invert(1) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.35));
 }
@@ -1283,11 +1283,11 @@ ul { list-style: none; }
     }
 
     .slide-logo-wrap {
-        margin-bottom: 18px;
+        margin-bottom: 24px;
     }
 
     .slide-logo {
-        width: 170px;
+        width: 220px;
     }
 
     .slide-catchcopy {
@@ -1470,11 +1470,11 @@ ul { list-style: none; }
     }
 
     .slide-logo-wrap {
-        margin-bottom: 14px;
+        margin-bottom: 18px;
     }
 
     .slide-logo {
-        width: 140px;
+        width: 180px;
     }
 
     .slide-catchcopy {
@@ -1640,11 +1640,11 @@ ul { list-style: none; }
     }
 
     .slide-logo-wrap {
-        margin-bottom: 12px;
+        margin-bottom: 16px;
     }
 
     .slide-logo {
-        width: 120px;
+        width: 155px;
     }
 
     .slide-catchcopy {
