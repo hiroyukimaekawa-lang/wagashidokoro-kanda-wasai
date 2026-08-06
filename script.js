@@ -32,4 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // 3. スクロール時のヘッダー制御（TOPページのみ）
+    const body = document.body;
+    if (body.classList.contains('home-page')) {
+        const handleScroll = () => {
+            if (window.scrollY > 80) {
+                body.classList.add('is-scrolled');
+            } else {
+                body.classList.remove('is-scrolled');
+            }
+        };
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }
 });

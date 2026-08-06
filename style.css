@@ -90,6 +90,18 @@ ul { list-style: none; }
     align-items: center;
 }
 
+/* TOPページのみ初期状態で非表示、スクロールでフェードイン */
+.home-page .header-logo {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.home-page.is-scrolled .header-logo {
+    opacity: 1;
+    visibility: visible;
+}
+
 .header-logo a {
     display: flex;
     align-items: center;
