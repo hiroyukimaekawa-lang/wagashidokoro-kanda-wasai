@@ -1466,7 +1466,11 @@ ul { list-style: none; }
     }
 
     .slideshow {
-        height: 300px;
+        height: 340px;
+    }
+
+    .slide-dots {
+        bottom: 12px;
     }
 
     .slide-logo-wrap {
@@ -1636,7 +1640,7 @@ ul { list-style: none; }
    ========================================================================== */
 @media screen and (max-width: 480px) {
     .slideshow {
-        height: 240px;
+        height: 280px;
     }
 
     .slide-logo-wrap {
