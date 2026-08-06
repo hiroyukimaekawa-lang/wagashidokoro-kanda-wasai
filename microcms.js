@@ -140,6 +140,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         const contents = await fetchWagashi();
 
+        // APIレスポンスおよび各フィールド値の確認用console.log
+        console.log("--- microCMS API Response ---");
+        console.log("取得された全商品データ (contents):", contents);
+        if (contents.length > 0) {
+            console.log("1番目の商品の詳細確認:");
+            console.log("  - title:", contents[0].title);
+            console.log("  - section (型: " + (Array.isArray(contents[0].section) ? "Array" : typeof contents[0].section) + "):", contents[0].section);
+            console.log("  - image:", contents[0].image);
+            console.log("  - description:", contents[0].description);
+            console.log("  - order:", contents[0].order);
+        }
+        console.log("-----------------------------");
+
         // 1. orderで昇順ソート（未設定の場合は末尾）
         const sortedContents = contents.sort((a, b) => {
             const orderA = typeof a.order === 'number' ? a.order : 9999;
@@ -147,15 +160,24 @@ document.addEventListener("DOMContentLoaded", async () => {
             return orderA - orderB;
         });
 
+        // 判定用ヘルパー：sectionが配列の場合と文字列の場合の双方に対応する
+        const matchSection = (item, sectionName) => {
+            if (!item.section) return false;
+            if (Array.isArray(item.section)) {
+                return item.section.includes(sectionName);
+            }
+            return item.section === sectionName;
+        };
+
         // 2. セクションごとに商品を振り分ける（画像URLが無い場合は除外する）
         const seasonalJyounamagashiList = sortedContents.filter(
-            item => item.section === "季節の上生菓子" && item.image && item.image.url
+            item => matchSection(item, "季節の上生菓子") && item.image && item.image.url
         );
         const standardWagashiList = sortedContents.filter(
-            item => item.section === "定番和菓子" && item.image && item.image.url
+            item => matchSection(item, "定番和菓子") && item.image && item.image.url
         );
         const seasonalWagashiList = sortedContents.filter(
-            item => item.section === "季節の和菓子" && item.image && item.image.url
+            item => matchSection(item, "季節の和菓子") && item.image && item.image.url
         );
 
         // 3. レンダリング
