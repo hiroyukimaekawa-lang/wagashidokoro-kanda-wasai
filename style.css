@@ -311,7 +311,7 @@ ul { list-style: none; }
 }
 
 .slide-sub {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     letter-spacing: 0.15em;
     opacity: 0.95;
 }
@@ -1483,7 +1483,7 @@ ul { list-style: none; }
     }
 
     .slide-sub {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
     }
 
     .hello-inner {
