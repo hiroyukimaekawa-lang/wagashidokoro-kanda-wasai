@@ -3,7 +3,6 @@ const SERVICE_ID = "kandawasai";
 const ENDPOINT = "wagashi";
 
 async function fetchWagashi() {
-    // 全件を取得できるようにlimit=100を指定
     const url = `https://${SERVICE_ID}.microcms.io/api/v1/${ENDPOINT}?limit=100`;
     const response = await fetch(url, {
         headers: {
@@ -18,10 +17,15 @@ async function fetchWagashi() {
 }
 
 function renderSeasonalJyounamagashi(items) {
+    // ⑨ renderSeasonalJyounamagashi()が実際に呼ばれているか
+    console.log("⑨ renderSeasonalJyounamagashi() が呼び出されました。引数 items:", items);
+
     const container = document.getElementById("seasonal-jyounamagashi");
     if (!container) return;
 
     if (items.length === 0) {
+        // ⑪ innerHTMLへ何を追加しているか
+        console.log("⑪ innerHTMLへ追加:", "<p class='microcms-empty-message'>ただいま準備中です。</p>");
         container.innerHTML = "<p class='microcms-empty-message'>ただいま準備中です。</p>";
         return;
     }
@@ -60,15 +64,22 @@ function renderSeasonalJyounamagashi(items) {
         ul.appendChild(li);
     });
 
+    // ⑪ innerHTMLへ何を追加しているか
+    console.log("⑪ containerにアペンドされる要素(ul):", ul);
     container.innerHTML = "";
     container.appendChild(ul);
 }
 
 function renderClassicWagashi(containerId, items) {
+    // ⑩ renderClassicWagashi()が呼ばれているか
+    console.log(`⑩ renderClassicWagashi() が呼び出されました。containerId: ${containerId}, items:`, items);
+
     const container = document.getElementById(containerId);
     if (!container) return;
 
     if (items.length === 0) {
+        // ⑪ innerHTMLへ何を追加しているか
+        console.log(`⑪ ${containerId} の innerHTMLへ追加:`, "<p class='microcms-empty-message'>ただいま準備中です。</p>");
         container.innerHTML = "<p class='microcms-empty-message'>ただいま準備中です。</p>";
         return;
     }
@@ -119,11 +130,18 @@ function renderClassicWagashi(containerId, items) {
     });
 
     sectionDiv.appendChild(ul);
+    // ⑪ innerHTMLへ何を追加しているか
+    console.log(`⑪ ${containerId} にアペンドされる要素(sectionDiv):`, sectionDiv);
     container.innerHTML = "";
     container.appendChild(sectionDiv);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    // ⑥⑦⑧ DOM要素の取得確認
+    console.log("⑥ document.getElementById('seasonal-jyounamagashi'):", document.getElementById("seasonal-jyounamagashi"));
+    console.log("⑦ document.getElementById('standard-wagashi'):", document.getElementById("standard-wagashi"));
+    console.log("⑧ document.getElementById('seasonal-wagashi'):", document.getElementById("seasonal-wagashi"));
+
     const containers = [
         document.getElementById("seasonal-jyounamagashi"),
         document.getElementById("standard-wagashi"),
@@ -140,47 +158,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         const contents = await fetchWagashi();
 
-        // APIレスポンスおよび各フィールド値の確認用console.log
-        console.log("--- microCMS API Response ---");
-        console.log("取得された全商品データ (contents):", contents);
-        if (contents.length > 0) {
-            console.log("1番目の商品の詳細確認:");
-            console.log("  - title:", contents[0].title);
-            console.log("  - section (型: " + (Array.isArray(contents[0].section) ? "Array" : typeof contents[0].section) + "):", contents[0].section);
-            console.log("  - image:", contents[0].image);
-            console.log("  - description:", contents[0].description);
-            console.log("  - order:", contents[0].order);
-        }
-        console.log("-----------------------------");
+        // ① console.log(contents)
+        console.log("① contents:", contents);
 
-        // 1. orderで昇順ソート（未設定の場合は末尾）
+        // 1. orderで昇順ソート
         const sortedContents = contents.sort((a, b) => {
             const orderA = typeof a.order === 'number' ? a.order : 9999;
             const orderB = typeof b.order === 'number' ? b.order : 9999;
             return orderA - orderB;
         });
 
-        // 判定用ヘルパー：sectionが配列の場合と文字列の場合の双方に対応する
-        const matchSection = (item, sectionName) => {
-            if (!item.section) return false;
-            if (Array.isArray(item.section)) {
-                return item.section.includes(sectionName);
-            }
-            return item.section === sectionName;
-        };
+        // ② console.log(sortedContents)
+        console.log("② sortedContents:", sortedContents);
 
-        // 2. セクションごとに商品を振り分ける（画像URLが無い場合は除外する）
+        // 2. セクションごとに商品を振り分ける（既存バグのままの厳密比較）
         const seasonalJyounamagashiList = sortedContents.filter(
-            item => matchSection(item, "季節の上生菓子") && item.image && item.image.url
+            item => item.section === "季節の上生菓子" && item.image && item.image.url
         );
         const standardWagashiList = sortedContents.filter(
-            item => matchSection(item, "定番和菓子") && item.image && item.image.url
+            item => item.section === "定番和菓子" && item.image && item.image.url
         );
         const seasonalWagashiList = sortedContents.filter(
-            item => matchSection(item, "季節の和菓子") && item.image && item.image.url
+            item => item.section === "季節の和菓子" && item.image && item.image.url
         );
 
-        // 3. レンダリング
+        // ③④⑤ 各リストのログ
+        console.log("③ seasonalJyounamagashiList:", seasonalJyounamagashiList);
+        console.log("④ standardWagashiList:", standardWagashiList);
+        console.log("⑤ seasonalWagashiList:", seasonalWagashiList);
+
+        // 3. レンダリング関uhnya呼び出し
         renderSeasonalJyounamagashi(seasonalJyounamagashiList);
         renderClassicWagashi("standard-wagashi", standardWagashiList);
         renderClassicWagashi("seasonal-wagashi", seasonalWagashiList);
