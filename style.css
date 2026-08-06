@@ -173,6 +173,19 @@ ul { list-style: none; }
 .header-nav {
     background-color: #F6C8BD;
     border-top: 1px solid rgba(122, 68, 82, 0.12);
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+/* TOPページ限定：初期状態（スクロール前）はメニューバーも透明 */
+.home-page .header-nav {
+    background-color: transparent;
+    border-top-color: transparent;
+}
+
+/* TOPページ限定：スクロール後はメニューバーの背景色を表示 */
+.home-page.is-scrolled .header-nav {
+    background-color: #F6C8BD;
+    border-top-color: rgba(122, 68, 82, 0.12);
 }
 
 .header-nav-list {
